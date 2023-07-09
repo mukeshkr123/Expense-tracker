@@ -16,7 +16,7 @@ function ExpenseForm({ categories }) {
       <div className="mb-3">
         <select className="form-select" name="" id="">
           {categories.map((val, index) => (
-            <option key={index} value="">
+            <option key={index} value={val}>
               {val}
             </option>
           ))}
