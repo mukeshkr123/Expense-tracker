@@ -17,7 +17,7 @@ const Schema = z.object({
   }),
 });
 
-function ExpenseForm() {
+function ExpenseForm({ onSubmit }) {
   const {
     handleSubmit,
     register,
@@ -25,11 +25,13 @@ function ExpenseForm() {
     reset,
   } = useForm({ resolver: zodResolver(Schema) });
 
+  const { description, amount, category } = errors;
+
   return (
     <form
       action=""
       onSubmit={handleSubmit((data) => {
-        console.log(data);
+        onSubmit(data);
         reset();
       })}
     >
@@ -42,7 +44,7 @@ function ExpenseForm() {
           type="text"
           className="form-control"
         />
-        {errors.description && (
+        {description && (
           <p className="text-danger">{errors.description.message}</p>
         )}
       </div>
@@ -55,9 +57,7 @@ function ExpenseForm() {
           type="text"
           className="form-control "
         />
-        {errors.amount && (
-          <p className="text-danger">{errors.amount.message}</p>
-        )}
+        {amount && <p className="text-danger">{errors.amount.message}</p>}
       </div>
       <div className="mb-3">
         <select {...register("category")} id="category" className="form-select">
@@ -68,9 +68,7 @@ function ExpenseForm() {
             </option>
           ))}
         </select>
-        {errors.category && (
-          <p className="text-danger">{errors.category.message}</p>
-        )}
+        {category && <p className="text-danger">{errors.category.message}</p>}
       </div>
       <button disabled={!isValid} className="btn btn-primary">
         Submit

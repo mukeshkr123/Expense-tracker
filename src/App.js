@@ -8,25 +8,36 @@ import categories from "./categories";
 
 function App() {
   const [expenses, setExpenses] = useState(Expenses);
-  const [selecetdCategory, setSelecetdCategory] = useState("");
-  console.log(selecetdCategory);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const ALL_CATEGORIES = "All Categories";
 
   const selectedExpenses =
-    selecetdCategory && selecetdCategory !== "All Categories"
-      ? expenses.filter((item) => item.category === selecetdCategory)
+    selectedCategory && selectedCategory !== ALL_CATEGORIES
+      ? expenses.filter((item) => item.category === selectedCategory)
       : expenses;
 
   return (
     <div className="m-3">
-      <ExpenseForm categories={categories} />
+      <ExpenseForm
+        categories={categories}
+        onSubmit={(expense) =>
+          setExpenses((prevExpenses) => [
+            ...prevExpenses,
+            { ...expense, id: prevExpenses.length + 1 },
+          ])
+        }
+      />
       <ExpenseFilter
         categories={categories}
-        onSelectedCategory={(category) => setSelecetdCategory(category)}
+        onSelectedCategory={(category) => setSelectedCategory(category)}
       />
       <ExpenseList
         expenses={selectedExpenses}
         onDelete={(id) =>
-          setExpenses(expenses.filter((item) => item.id !== id))
+          setExpenses((prevExpenses) =>
+            prevExpenses.filter((item) => item.id !== id)
+          )
         }
       />
     </div>

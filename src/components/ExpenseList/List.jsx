@@ -1,4 +1,8 @@
 function ExpenseList({ expenses, onDelete }) {
+  const totalAmount = expenses
+    .reduce((acc, expense) => expense.amount + acc, 0)
+    .toFixed(2);
+
   return (
     <table className="table mt-3 table-bordered">
       <thead>
@@ -29,12 +33,7 @@ function ExpenseList({ expenses, onDelete }) {
       <tfoot>
         <tr>
           <td>Total</td>
-          <td>
-            $
-            {expenses
-              .reduce((acc, expense) => expense.amount + acc, 0)
-              .toFixed(2)}
-          </td>
+          <td>${totalAmount}</td>
         </tr>
       </tfoot>
     </table>
@@ -42,19 +41,3 @@ function ExpenseList({ expenses, onDelete }) {
 }
 
 export default ExpenseList;
-
-{
-  /* <tfoot>
-        <tr>
-          <td>Total</td>
-          <td>
-            $
-            {expenses
-              .reduce((acc, expense) => expense.amount + acc, 0)
-              .toFixed(2)}
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tfoot> */
-}

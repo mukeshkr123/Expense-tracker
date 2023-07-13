@@ -1,9 +1,11 @@
 const ExpenseFilter = ({ onSelectedCategory, categories }) => {
+  const handleCategoryChange = (event) => {
+    const selectedCategory = event.target.value;
+    onSelectedCategory(selectedCategory);
+  };
+
   return (
-    <select
-      className="form-select mt-3"
-      onChange={(event) => onSelectedCategory(event.target.value)}
-    >
+    <select className="form-select mt-3" onChange={handleCategoryChange}>
       <option value="">All Categories</option>
 
       {categories.map((val, index) => (
